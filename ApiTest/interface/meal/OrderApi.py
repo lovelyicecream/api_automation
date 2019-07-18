@@ -22,7 +22,7 @@ class OrderApi(object):
             "paramValues":
                 [{"idCard": id_card, "idType": id_type, "tkne": tkne, "flightNo": flight_no,
                   "scheduledDeptTime": scheduled_dept_time, "orig": orig, "dest": dest, "seatLevel": seat_level,
-                  "skuIds": [sku_id], "source": source, "createType": create_type, "skuStocks": sku_stocks,
+                  "skuIds": [sku_id], "source": source, "createType": create_type, "skuStocks": [sku_stocks],
                   "buyerName": buyer_name, "buyerPhone": buyer_phone, "buyerFfpCard": buyer_ffpcard
                   }]
         }

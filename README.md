@@ -1,4 +1,5 @@
 Note:
+ -  运行环境: windows10
  -  代码目前支持python3, 已通过Python 3.6.5下运行测试
 
 Info:

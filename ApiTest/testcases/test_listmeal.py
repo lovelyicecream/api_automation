@@ -2,22 +2,25 @@
 
 import unittest
 from ddt import ddt, file_data
-from common.operate_json import write_json
+from common.operate import write_json, get_path
 from interface.meal.ProductApi import ProductApi
 
 
 @ddt
 class TestListMeal(unittest.TestCase):
+    """
+    test ProductApi.list_meal
+    """
     @classmethod
     def setUpClass(cls):
-        cls.filename = "list_meal.json"
+        cls.filename = "get_meal.json"
         global data
         data = []
 
-    @file_data('../params/list_meal.json')
+    @file_data(get_path('params', 'list_meal.json'))
     def test_listMeal(self, flight_no, scheduled_dept_time, orig, dest, seat_level):
         self.content = ProductApi.list_meal(flight_no, scheduled_dept_time, orig, dest, seat_level)
-        if len(self.content['data']) > 1:
+        if self.content['data']:
             params = {
                 'sku_id': str(self.content['data'][0]['skuId']),
                 'scheduled_dept_time': scheduled_dept_time
@@ -30,7 +33,7 @@ class TestListMeal(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        write_json('get_meal.json', write_data=data)
+        write_json(cls.filename, write_data=data)
 
 
 if __name__ == '__main__':

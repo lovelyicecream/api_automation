@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-# -*- coding:utf-8 -*-
 import requests
 from common.logger import Log
 from common.config import url, registry, version

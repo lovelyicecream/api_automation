@@ -27,6 +27,19 @@ registry = config['common']['registry']
 version = config['common']['version']
 content_type = config['common']['content_type']
 
+# redis configuration
+redis_host = config['reids']['host']
+redis_port = config['reids']['port']
+redis_password = config['reids']['password']
+redis_db_index = config['reids']['db_index']
+
+# mysql configuration
+mysql_host = config['mysql']['host']
+mysql_port = config['mysql']['port']
+mysql_user = config['mysql']['user']
+mysql_password = config['mysql']['password']
+mysql_db = config['mysql']['database']
+
 # interface ProductApi.listPassenger
 listPassenger_interface = config['ProductApi-listPassenger']['interface']
 listPassenger_method = config['ProductApi-listPassenger']['method']

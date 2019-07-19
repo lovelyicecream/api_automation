@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 
-import json
-import time
 from common.config import create_source, create_skuStocks, create_createType
 from common.config import create_buyerName, create_buyerPhone, create_buyerFfpCard
+import json
+import time
+import os
 
 
 def format_time(timestamp):
@@ -17,6 +18,17 @@ def format_time(timestamp):
     return time_format
 
 
+def get_path(dirname, filename):
+    """
+    get the file of abspath
+    :param dirname: dir's name
+    :param filename:  file's name
+    :return:  the file of abspath
+    """
+    return os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), dirname),
+                        filename)
+
+
 def write_json(filename, write_data):
     """
     write json file to AptTest/params
@@ -25,7 +37,7 @@ def write_json(filename, write_data):
     :return: None
     """
     content = json.dumps(write_data)
-    file_path = "../params/{}".format(filename)
+    file_path = get_path('params', filename)
     with open(file_path, 'w') as f:
         f.truncate()
         f.write(content)
@@ -37,7 +49,7 @@ def read_json(filename):
     :param filename: json filename
     :return: dict
     """
-    file_path = "../params/{}".format(filename)
+    file_path = get_path('params', filename)
     with open(file_path, 'r') as f:
         content = json.loads(f.read())
     return content
@@ -45,7 +57,7 @@ def read_json(filename):
 
 def format_create_json():
     """
-    interface "create" for paramValues
+    generator interface "create" for paramValues
     :return:  list[dict1, dict2, dict3 ...]
     """
     list_passenger = read_json('list_passenger.json')

@@ -31,6 +31,14 @@ class DataBase(object):
         return result
 
     @classmethod
+    def delete_redis_key(cls, key):
+        conn = cls.__connect_redis()
+        if conn.exists(key):
+            conn.delete(key)
+        else:
+            raise "Failed to delete keys from redis"
+
+    @classmethod
     def __connect_mysql(cls):
         try:
             conn = pymysql.connect(host=mysql_host,

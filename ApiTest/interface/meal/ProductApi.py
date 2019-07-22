@@ -1,11 +1,9 @@
 # -*- coding:utf-8 -*-
-import requests
-from common.logger import Log
+
 from common.config import url, registry, version, getMeal_interface, getMeal_method, getMeal_paramTypes
 from common.config import listPassenger_interface, listPassenger_method, listPassenger_paramTypes
 from common.config import listMeal_interface, listMeal_method, listMeal_paramTypes
-
-logger = Log()
+from common.operate import send_request
 
 
 class ProductApi(object):
@@ -20,14 +18,7 @@ class ProductApi(object):
             "paramValues":
                 [{"idCard": id_card, "idType": id_type, "tkne": tkne, "passengerName": passenger_name}]
         }
-        try:
-            response = requests.post(url=url, json=payload, timeout=30)
-            if response.status_code == 200:
-                return response.json()
-            else:
-                logger.error("Interface: list_passenger called error: %s" % response.status_code)
-        except Exception as e:
-            logger.error("list_passenger Exception: ", e)
+        return send_request('list_passenger', 'POST', url, json_data=payload)
 
     @staticmethod
     def list_meal(flight_no, scheduled_dept_time, orig, dest, seat_level):
@@ -41,14 +32,7 @@ class ProductApi(object):
                 [{"flightNo": flight_no, "scheduledDeptTime": scheduled_dept_time, "orig": orig, "dest": dest,
                   "seatLevel": seat_level}]
         }
-        try:
-            response = requests.post(url=url, json=payload, timeout=30)
-            if response.status_code == 200:
-                return response.json()
-            else:
-                logger.error("Interface: list_meal called error: %s" % response.status_code)
-        except Exception as e:
-            logger.error("list_meal Exception: ", e)
+        return send_request('list_meal', 'POST', url, json_data=payload)
 
     @staticmethod
     def get_meal(sku_id, scheduled_dept_time):
@@ -61,11 +45,4 @@ class ProductApi(object):
             "paramValues":
                 [{"skuId": sku_id, "scheduledDeptTime": scheduled_dept_time}]
         }
-        try:
-            response = requests.post(url=url, json=payload, timeout=30)
-            if response.status_code == 200:
-                return response.json()
-            else:
-                logger.error("Interface: get_meal called error: %s" % response.status_code)
-        except Exception as e:
-            logger.error("get_meal Exception: ", e)
+        return send_request('get_meal', 'POST', url, json_data=payload)

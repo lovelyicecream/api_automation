@@ -1,11 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import requests
-from common.logger import Log
 from common.config import url, registry, version
 from common.config import create_interface, create_method, create_paramTypes
-
-logger = Log()
+from common.operate import send_request
 
 
 class OrderApi(object):
@@ -25,11 +22,4 @@ class OrderApi(object):
                   "buyerName": buyer_name, "buyerPhone": buyer_phone, "buyerFfpCard": buyer_ffpcard
                   }]
         }
-        try:
-            response = requests.post(url=url, json=payload, timeout=30)
-            if response.status_code == 200:
-                return response.json()
-            else:
-                logger.error("Interface: create_order called error: %s" % response.status_code)
-        except Exception as e:
-            logger.error("create_order Exception: ", e)
+        return send_request('create_order', 'POST', url, json_data=payload)

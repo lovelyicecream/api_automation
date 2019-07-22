@@ -2,9 +2,33 @@
 
 from common.config import create_source, create_skuStocks, create_createType
 from common.config import create_buyerName, create_buyerPhone, create_buyerFfpCard
+from common.logger import Log
+import requests
 import json
 import time
 import os
+
+logger = Log()
+
+
+def send_request(interface, method, url, json_data, timeout=30):
+    """
+    generate request method by requests library
+    :param interface:  testing interface name
+    :param method:  HTTP method
+    :param url:   test url
+    :param json_data:  json data
+    :param timeout:  max_time for request
+    :return:  response
+    """
+    try:
+        response = requests.request(method=method, url=url, json=json_data, timeout=timeout)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            logger.error("Interface: %s called error: %s" % (interface, response.status_code))
+    except Exception as e:
+        logger.error("Interface: %s called Exception: %s" % (interface, e))
 
 
 def format_time(timestamp):

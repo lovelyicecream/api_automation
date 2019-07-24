@@ -3,6 +3,8 @@
 from common.config import create_source, create_skuStocks, create_createType
 from common.config import create_buyerName, create_buyerPhone, create_buyerFfpCard
 from common.logger import Log
+from common.config import retry_times
+from requests import ConnectTimeout
 import requests
 import json
 import time
@@ -11,7 +13,20 @@ import os
 logger = Log()
 
 
-def send_request(interface, method, url, json_data, timeout=30):
+def retry(times):
+    def inner(func):
+        def wrapper(*args, **kwargs):
+            for t in range(times):
+                try:
+                    return func(*args, **kwargs)
+                except ConnectionError:
+                    logger.error("Connect Error: request connect error! ")
+        return wrapper
+    return inner
+
+
+@retry(int(retry_times))
+def send_request(interface, method, url, json_data, timeout=10):
     """
     generate request method by requests library
     :param interface:  testing interface name

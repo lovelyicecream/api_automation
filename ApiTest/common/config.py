@@ -26,6 +26,7 @@ url = config['common']['url']
 registry = config['common']['registry']
 version = config['common']['version']
 content_type = config['common']['content_type']
+retry_times = config['common']['retry_times']
 
 # redis configuration
 redis_host = config['reids']['host']
